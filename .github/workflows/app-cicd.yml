@@ -38,7 +38,7 @@ jobs:
         dotnet tool install -g dotnet-reportgenerator-globaltool 
         pwd
         ls
-        ~/.dotnet/tools/reportgenerator "-reports:./coverage.opencover.xml" "-targetdir:./CodeCoverage" "-reporttypes:HtmlInline_AzurePipelines;Cobertura"
+        ~/.dotnet/tools/reportgenerator "-reports:./*UT/coverage.opencover.xml" "-targetdir:./CodeCoverage" "-reporttypes:HtmlInline_AzurePipelines;Cobertura"
     
     - name: code analysis using sonar cloud
       if: ${{ success() }}
