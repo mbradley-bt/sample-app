@@ -1,8 +1,8 @@
 name: Application CI
 
 on:
-#   push:
-#     branches: [ sonar_integration, develop, master ]
+  push:
+    branches: [ branch2, develop, master ]
   pull_request:
     branches: [ develop ]
 
@@ -36,7 +36,7 @@ jobs:
       if: ${{ success() }}
       run: |
         dotnet tool install -g dotnet-reportgenerator-globaltool 
-        ~/.dotnet/tools/reportgenerator "-reports:./TimeManagementUT/coverage.opencover.xml" "-targetdir:./CodeCoverage" "-reporttypes:HtmlInline_AzurePipelines;Cobertura"
+        ~/.dotnet/tools/reportgenerator "-reports:./coverage.opencover.xml" "-targetdir:./CodeCoverage" "-reporttypes:HtmlInline_AzurePipelines;Cobertura"
     
     - name: code analysis using sonar cloud
       if: ${{ success() }}
