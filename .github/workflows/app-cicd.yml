@@ -7,7 +7,7 @@ env:
   JFROG_ARTIFACTORY_BUCKET: docker-local
 on:
   push:
-    branches: [ develop, master ]
+    branches: [ develop, master, jfrog-sessionkey ]
   pull_request:
     branches: [ develop, master ]
 
