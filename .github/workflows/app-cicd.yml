@@ -61,6 +61,10 @@ jobs:
           docker build . --file ./scripts/build/Dockerfile -t sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8}
           docker tag sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8}
       - uses: jfrog/setup-jfrog-cli@v1
+        env:
+          JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_1 }}
       - run: |
-          jfrog rt c artifactory --url=$JFROG_URL --user=$JFROG_USERNAME --apikey=$JFROG_API_KEY --enc-password=false
+          jfrog rt ping
           jfrog rt dp $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY_BUCKET 
+ #         jfrog rt c artifactory --url=$JFROG_URL --user=$JFROG_USERNAME --apikey=$JFROG_API_KEY --enc-password=false
+         
