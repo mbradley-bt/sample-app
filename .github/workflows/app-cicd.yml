@@ -1,8 +1,5 @@
 name: Application CI
 env:
-  JFROG_URL: ${{ secrets.JFROG_URL }}
-  JFROG_USERNAME: ${{ secrets.JFROG_USERNAME }} 
-  JFROG_API_KEY : ${{ secrets.JFROG_API_KEY }}
   JFROG_ARTIFACTORY: urmilag.jfrog.io/docker-local
   JFROG_ARTIFACTORY_BUCKET: docker-local
 on:
