@@ -2,7 +2,6 @@ name: Application CI
 env:
   JFROG_ARTIFACTORY: urmilag.jfrog.io/docker-local
   JFROG_ARTIFACTORY_BUCKET: docker-local
-  JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_1 }}
 
 on:
   push:
@@ -60,9 +59,11 @@ jobs:
           docker build . --file ./scripts/build/Dockerfile -t sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8}
           docker tag sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8}
       - uses: jfrog/setup-jfrog-cli@v1
+        env:
+          JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_1 }}
       - run: |
-          jfrog rt c artifactory --interactive=false --enc-password=true --url=$JFROG_URL --access-token=$JF_ARTIFACTORY_1
           jfrog rt ping
           jfrog rt dp $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY_BUCKET 
  #         jfrog rt c artifactory --url=$JFROG_URL --user=$JFROG_USERNAME --apikey=$JFROG_API_KEY --enc-password=false
+#          jfrog rt c artifactory --interactive=false --enc-password=true --url=$JFROG_URL --access-token=$JF_ARTIFACTORY_1
          
