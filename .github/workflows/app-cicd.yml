@@ -58,12 +58,18 @@ jobs:
         run: |
           docker build . --file ./scripts/build/Dockerfile -t sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8}
           docker tag sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8}
-      - uses: jfrog/setup-jfrog-cli@v1
+      - name: Setup Jfrog CLI
+        uses: jfrog/setup-jfrog-cli@v1
+        with:
+          VERSION: 1.39.2
         env:
           JF_ARTIFACTORY_1: ${{ secrets.JF_ARTIFACTORY_1 }}
-      - run: |
+      - name: ping to jfrog cli
+        run: |
           jfrog rt ping
-          jfrog rt dp $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY_BUCKET 
+#      - run: |
+ #         jfrog rt ping
+#          jfrog rt dp $JFROG_ARTIFACTORY/sample-app-${GITHUB_REF##*/}:${GITHUB_SHA::8} $JFROG_ARTIFACTORY_BUCKET 
  #         jfrog rt c artifactory --url=$JFROG_URL --user=$JFROG_USERNAME --apikey=$JFROG_API_KEY --enc-password=false
 #          jfrog rt c artifactory --interactive=false --enc-password=true --url=$JFROG_URL --access-token=$JF_ARTIFACTORY_1
          
